@@ -11,6 +11,7 @@
 - 生成符合华南理工大学格式要求的 LaTeX 报告
 - 自动编译 PDF 并添加学校水印
 - 按实验名称自动命名文件，防止覆盖
+- 开箱即用，无需硬编码路径
 
 ## 前置安装要求
 
@@ -19,11 +20,11 @@
 1. 访问 [MiKTeX 官网](https://miktex.org/download) 下载并安装
 2. 安装时选择"Complete"完整安装模式
 3. 安装完成后，将 MiKTeX 的 bin 目录添加到系统 PATH 环境变量
-   - 默认路径：`D:\Miktex\miktex\bin\x64` 或 `C:\Program Files\MiKTeX\miktex\bin\x64`
+   - Windows 默认路径：`C:\Program Files\MiKTeX\miktex\bin\x64` 或自定义安装路径
 
-### 2. VS Code 扩展安装
+### 2. Trae 编辑器扩展安装
 
-在 VS Code 中安装以下扩展：
+在 Trae 编辑器中安装以下扩展：
 - **LaTeX Workshop**：用于 LaTeX 代码编辑和编译
 - **LaTeX Language Support**：提供 LaTeX 语法支持
 
@@ -31,7 +32,7 @@
 
 确保已安装 Python 3.x，并安装以下库：
 ```bash
-pip install python-pptx pywin32
+pip install python-pptx pywin32 pypdf
 ```
 
 ## 使用方法
@@ -39,8 +40,10 @@ pip install python-pptx pywin32
 ### 基本使用
 
 1. **准备材料**：
-   - 将实验 PPT 课件放在指定目录：`C:\Users\Cgy123456\Desktop\学长的焚决\大一下\大物实验\`
-   - 准备好原始数据图片
+   - 在桌面创建 `report` 文件夹，包含两个子文件夹：
+     - `resource`：存放实验 PPT 课件和原始数据图片
+     - `save`：存放生成的 LaTeX 文件和 PDF 报告
+   - 将实验 PPT 课件和原始数据图片放入 `resource` 文件夹
 
 2. **触发 Skill**：
    在对话中输入以下任一关键词：
@@ -49,7 +52,7 @@ pip install python-pptx pywin32
    - 上传 PPT 课件或原始数据图片并提及要写实验报告
 
 3. **选择实验**：
-   Skill 会自动列出可用的 PPT 课件，选择需要完成的实验
+   Skill 会自动列出 `resource` 文件夹中可用的 PPT 课件，选择需要完成的实验
 
 4. **生成报告**：
    - Skill 会自动读取 PPT 内容和原始数据
@@ -57,13 +60,13 @@ pip install python-pptx pywin32
    - 自动编译为 PDF 文件
 
 5. **查看结果**：
-   生成的 PDF 文件保存在：`C:\Users\Cgy123456\Desktop\学长的焚决\大一下\大物实验\大物实验报告\`
+   生成的 PDF 文件保存在桌面的 `report/save/` 文件夹中
 
 ### 文件命名规则
 
 - LaTeX 源代码：`[实验名称].tex`
 - PDF 报告：`[实验名称].pdf`
-- 例如：PPT 名为"金属逸出功.ppt"，则生成"金属逸出功.tex"和"金属逸出功.pdf"
+- 例如：PPT 名为"金属逸出功.pptx"，则生成"金属逸出功.tex"和"金属逸出功.pdf"
 
 ## 报告格式
 
@@ -96,22 +99,28 @@ pip install python-pptx pywin32
 3. **格式规范**：正文使用宋体小四号，1.5 倍行距
 4. **公式环境**：所有公式使用标准 LaTeX 数学环境
 5. **文件覆盖**：按实验名称命名文件，不会覆盖之前的报告
+6. **路径设置**：所有路径均为动态生成，无需手动配置
 
 ## 故障排除
 
 ### 常见问题
 
 1. **PPT 无法读取**：
-   - 确保 PPT 文件放在正确目录
+   - 确保 PPT 文件放在 `report/resource` 文件夹中
    - 旧版.ppt 文件会自动转换为.pptx 格式
 
 2. **LaTeX 编译失败**：
    - 检查 MiKTeX 是否正确安装
    - 确认 xelatex 命令在 PATH 中可用
+   - 检查 Trae 中的 LaTeX Workshop 扩展是否正常工作
 
 3. **PDF 未生成**：
-   - 检查输出目录是否存在
+   - 检查 `report/save` 文件夹是否存在
    - 确认有足够的磁盘空间
+
+4. **文件夹不存在**：
+   - Skill 会自动在桌面创建 `report` 文件夹及其子文件夹
+   - 如未自动创建，可手动创建
 
 ### 联系支持
 
@@ -120,6 +129,7 @@ pip install python-pptx pywin32
 2. Python 依赖是否安装
 3. 文件路径是否正确
 4. PPT 格式是否兼容
+5. Trae 编辑器中的 LaTeX Workshop 扩展是否正常工作
 
 ## 许可证
 
